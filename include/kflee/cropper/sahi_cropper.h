@@ -1,6 +1,6 @@
 #pragma once
 
-#include "kflee/data/slice_types.h"
+#include "kflee/typings/slice_types.h"
 
 #include <opencv2/core.hpp>
 

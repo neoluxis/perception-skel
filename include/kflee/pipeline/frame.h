@@ -1,10 +1,10 @@
 #pragma once
 
 #include "kflee/cropper/sahi_cropper.h"
-#include "kflee/data/slice_types.h"
-#include "kflee/data/types.h"
+#include "kflee/typings/slice_types.h"
+#include "kflee/typings/types.h"
 #include "kflee/dnn/inferer.h"
-#include "kflee/prep/preprocessor.h"
+#include "kflee/preproc/preprocessor.h"
 
 #include <opencv2/core.hpp>
 

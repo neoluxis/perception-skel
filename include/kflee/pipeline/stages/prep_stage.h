@@ -1,7 +1,7 @@
 #pragma once
 
 #include "kflee/pipeline/stage.h"
-#include "kflee/prep/preprocessor.h"
+#include "kflee/preproc/preprocessor.h"
 
 #include <string>
 
