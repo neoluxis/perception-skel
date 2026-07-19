@@ -6,19 +6,19 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <utility>
 
 namespace kflee::filter {
 
 /**
  * 滤波器注册工厂
  *
- * 维护滤波器名称到工厂函数的映射。各滤波器实现在初始化时
- * 通过 register_filter() 注册自身，追踪器通过 create() 按名称创建实例。
+ * 维护滤波器名称到工厂函数的映射。各滤波器通过 FilterRegistrar 模板
+ * 自动注册自身（库加载时静态构造），追踪器通过 create() 按名称创建实例。
  *
  * 使用方式：
- *   // 注册（在各滤波器库的 register_filter() 函数中）
- *   FilterRegistry::instance().register_filter("kf",
- *       []() { return std::make_unique<KfFilter>(); });
+ *   // 注册（在各滤波器 .cpp 中，一行即可，库加载时自动执行）
+ *   static const kflee::filter::FilterRegistrar<KfFilter> kRegistrar("kf");
  *
  *   // 创建（在 Track 构造函数中，仅一次）
  *   auto filter = FilterRegistry::instance().create("kf");
@@ -60,6 +60,25 @@ public:
 private:
     FilterRegistry() = default;
     std::map<std::string, Factory> factories_;
+};
+
+/**
+ * 滤波器自动注册辅助模板
+ *
+ * 每个滤波器实现文件只需声明一个 static const 实例，
+ * 其构造函数会在库加载时自动将工厂注册到 FilterRegistry。
+ *
+ * 使用方式（在任意 .cpp 文件中）：
+ *   static const kflee::filter::FilterRegistrar<KfFilter> kRegistrar("kf");
+ *
+ * 线程安全：静态初始化阶段单线程执行，安全。
+ */
+template <typename T>
+struct FilterRegistrar {
+    explicit FilterRegistrar(const std::string& name) {
+        FilterRegistry::instance().register_filter(name,
+            []() -> std::unique_ptr<Filter> { return std::make_unique<T>(); });
+    }
 };
 
 }  // namespace kflee::filter

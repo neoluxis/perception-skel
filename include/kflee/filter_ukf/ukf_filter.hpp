@@ -39,7 +39,7 @@ namespace kflee::filter_ukf {
  *   - UkfFilter：sigma 点传播，精度可达二阶
  *   - 两者共享相同的状态空间和观测模型
  *
- * 通过 FilterRegistry 注册为 "ukf"。
+ * 通过 FilterRegistrar 自动注册为 "ukf"。
  */
 class UkfFilter : public kflee::filter::Filter {
 public:
@@ -100,10 +100,5 @@ private:
      */
     void generate_sigma_points(float sigma_points[kNumSigma][8]) const;
 };
-
-/**
- * 向全局 FilterRegistry 注册 "ukf" 滤波器
- */
-void register_filter();
 
 }  // namespace kflee::filter_ukf

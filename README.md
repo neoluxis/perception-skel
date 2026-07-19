@@ -1,6 +1,6 @@
 # neolux perception library
 
-基于 ONNX Runtime 的 YOLOv8s 目标检测推理框架，支持 SAHI 切片、ByteTrack 多目标跟踪。
+基于 ONNX Runtime 的 YOLOv8s 目标检测推理框架，支持图像切片、ByteTrack 多目标跟踪等。
 
 本仓库提供预编译的头文件和库文件，方便下游项目通过 CMake `find_package` 直接集成。
 
@@ -17,7 +17,15 @@
 
 ## 使用
 
-```cmake
+### 拉取仓库
+
+首先拉取仓库到本地
+
+```bash
+git clone git@github.com:neoluxis/perception-tracker-pipeline.git
+```
+
+```bash
 # 设置 CMAKE_PREFIX_PATH 指向本仓库根目录
 cmake -S . -B build -DCMAKE_PREFIX_PATH=/path/to/kflee-public
 
@@ -25,11 +33,22 @@ cmake -S . -B build -DCMAKE_PREFIX_PATH=/path/to/kflee-public
 cmake -S . -B build -Dkflee_DIR=/path/to/kflee-public/lib/cmake/kflee
 ```
 
-```cmake
+```c
 # 下游 CMakeLists.txt
 find_package(kflee REQUIRED)
 target_link_libraries(my_app PRIVATE kflee::pipeline kflee::tracker)
 # 静态链接：kflee::pipeline_static
+```
+
+### 直接安装
+
+如果是 Ubuntu 系统，可以直接安装
+```bash
+# Ubuntu aarch64
+sudo apt install https://github.com/neoluxis/perception-tracker-pipeline/releases/download/v1.0.0/kflee-1.0.0-Linux-x86_64.deb
+
+# Ubuntu x86_64
+sudo apt install https://github.com/neoluxis/perception-tracker-pipeline/releases/download/v1.0.0/kflee-1.0.0-Linux-x86_64.deb
 ```
 
 ## 依赖

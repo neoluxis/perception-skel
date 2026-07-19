@@ -19,7 +19,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_cmake_targets_defined "")
 set(_cmake_targets_not_defined "")
 set(_cmake_expected_targets "")
-foreach(_cmake_expected_target IN ITEMS kflee::kflee_typings kflee::kflee_preproc kflee::kflee_prep_static kflee::kflee_cropper kflee::kflee_cropper_static kflee::kflee_perception kflee::kflee_perception_static kflee::kflee_filter kflee::kflee_filter_static kflee::kflee_filter_kf kflee::kflee_filter_kf_static kflee::kflee_filter_ekf kflee::kflee_filter_ekf_static kflee::kflee_filter_ukf kflee::kflee_filter_ukf_static kflee::kflee_hungarian kflee::kflee_hungarian_static kflee::kflee_tracker kflee::kflee_tracker_static kflee::kflee_dnn kflee::kflee_dnn_onnx kflee::kflee_dnn_onnx_static kflee::kflee_visualization kflee::kflee_visualization_static kflee::kflee_pipeline kflee::kflee_pipeline_static)
+foreach(_cmake_expected_target IN ITEMS kflee::kflee_typings kflee::kflee_preproc kflee::kflee_prep_static kflee::kflee_cropper kflee::kflee_cropper_static kflee::kflee_perception kflee::kflee_perception_static kflee::kflee_filter kflee::kflee_filter_static kflee::kflee_filter_kf kflee::kflee_filter_kf_static kflee::kflee_filter_ekf kflee::kflee_filter_ekf_static kflee::kflee_filter_ukf kflee::kflee_filter_ukf_static kflee::kflee_hungarian kflee::kflee_hungarian_static kflee::kflee_mot kflee::kflee_mot_static kflee::kflee_mot_bytetrack kflee::kflee_mot_bytetrack_static kflee::kflee_dnn kflee::kflee_dnn_onnx kflee::kflee_dnn_onnx_static kflee::kflee_visualization kflee::kflee_visualization_static kflee::kflee_pipeline kflee::kflee_pipeline_static)
   list(APPEND _cmake_expected_targets "${_cmake_expected_target}")
   if(TARGET "${_cmake_expected_target}")
     list(APPEND _cmake_targets_defined "${_cmake_expected_target}")
@@ -199,22 +199,40 @@ set_target_properties(kflee::kflee_hungarian_static PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
 )
 
-# Create imported target kflee::kflee_tracker
-add_library(kflee::kflee_tracker SHARED IMPORTED)
+# Create imported target kflee::kflee_mot
+add_library(kflee::kflee_mot SHARED IMPORTED)
 
-set_target_properties(kflee::kflee_tracker PROPERTIES
+set_target_properties(kflee::kflee_mot PROPERTIES
   INTERFACE_COMPILE_FEATURES "cxx_std_17"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
   INTERFACE_LINK_LIBRARIES "kflee::kflee_typings;kflee::kflee_filter;kflee::kflee_hungarian"
 )
 
-# Create imported target kflee::kflee_tracker_static
-add_library(kflee::kflee_tracker_static STATIC IMPORTED)
+# Create imported target kflee::kflee_mot_static
+add_library(kflee::kflee_mot_static STATIC IMPORTED)
 
-set_target_properties(kflee::kflee_tracker_static PROPERTIES
+set_target_properties(kflee::kflee_mot_static PROPERTIES
   INTERFACE_COMPILE_FEATURES "cxx_std_17"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
   INTERFACE_LINK_LIBRARIES "kflee::kflee_typings;kflee::kflee_filter;kflee::kflee_hungarian"
+)
+
+# Create imported target kflee::kflee_mot_bytetrack
+add_library(kflee::kflee_mot_bytetrack SHARED IMPORTED)
+
+set_target_properties(kflee::kflee_mot_bytetrack PROPERTIES
+  INTERFACE_COMPILE_FEATURES "cxx_std_17"
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+  INTERFACE_LINK_LIBRARIES "kflee::kflee_mot"
+)
+
+# Create imported target kflee::kflee_mot_bytetrack_static
+add_library(kflee::kflee_mot_bytetrack_static STATIC IMPORTED)
+
+set_target_properties(kflee::kflee_mot_bytetrack_static PROPERTIES
+  INTERFACE_COMPILE_FEATURES "cxx_std_17"
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+  INTERFACE_LINK_LIBRARIES "kflee::kflee_mot"
 )
 
 # Create imported target kflee::kflee_dnn
@@ -263,7 +281,7 @@ add_library(kflee::kflee_pipeline SHARED IMPORTED)
 set_target_properties(kflee::kflee_pipeline PROPERTIES
   INTERFACE_COMPILE_FEATURES "cxx_std_17"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "kflee::kflee_typings;kflee::kflee_cropper;kflee::kflee_preproc;kflee::kflee_dnn;kflee::kflee_perception;kflee::kflee_visualization;kflee::kflee_tracker;opencv_core;opencv_imgproc;opencv_imgcodecs;opencv_videoio;opencv_highgui"
+  INTERFACE_LINK_LIBRARIES "kflee::kflee_typings;kflee::kflee_cropper;kflee::kflee_preproc;kflee::kflee_dnn;kflee::kflee_perception;kflee::kflee_visualization;kflee::kflee_mot;opencv_core;opencv_imgproc;opencv_imgcodecs;opencv_videoio;opencv_highgui"
 )
 
 # Create imported target kflee::kflee_pipeline_static
@@ -272,7 +290,7 @@ add_library(kflee::kflee_pipeline_static STATIC IMPORTED)
 set_target_properties(kflee::kflee_pipeline_static PROPERTIES
   INTERFACE_COMPILE_FEATURES "cxx_std_17"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "kflee::kflee_typings;kflee::kflee_cropper;kflee::kflee_preproc;kflee::kflee_dnn;kflee::kflee_perception;kflee::kflee_visualization;kflee::kflee_tracker;opencv_core;opencv_imgproc;opencv_imgcodecs;opencv_videoio;opencv_highgui"
+  INTERFACE_LINK_LIBRARIES "kflee::kflee_typings;kflee::kflee_cropper;kflee::kflee_preproc;kflee::kflee_dnn;kflee::kflee_perception;kflee::kflee_visualization;kflee::kflee_mot;opencv_core;opencv_imgproc;opencv_imgcodecs;opencv_videoio;opencv_highgui"
 )
 
 # Load information for each installed configuration.

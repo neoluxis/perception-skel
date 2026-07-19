@@ -37,7 +37,7 @@ namespace kflee::filter_ekf {
  *   - EkfFilter 直接使用检测器原始 tlwh 作为测量值，观测函数 h(x) 包含
  *     a*h 非线性项，由 EKF 通过 Jacobian 正确传播不确定性
  *
- * 通过 FilterRegistry 注册为 "ekf"。
+ * 通过 FilterRegistrar 自动注册为 "ekf"。
  */
 class EkfFilter : public kflee::filter::Filter {
 public:
@@ -83,12 +83,5 @@ private:
     /** 构建观测噪声协方差 R（4x4 对角矩阵） */
     void build_measurement_noise(float R[16]);
 };
-
-/**
- * 向全局 FilterRegistry 注册 "ekf" 滤波器
- *
- * 应用启动时调用一次即可。重复调用安全（会覆盖之前的注册）。
- */
-void register_filter();
 
 }  // namespace kflee::filter_ekf

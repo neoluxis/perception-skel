@@ -26,7 +26,7 @@ namespace kflee::filter_kf {
  *   - 位置标准差权重 = 1/20
  *   - 速度标准差权重 = 1/160
  *
- * 通过 FilterRegistry 注册为 "kf"。
+ * 通过 FilterRegistrar 自动注册为 "kf"。
  */
 class KfFilter : public kflee::filter::Filter {
 public:
@@ -69,12 +69,5 @@ private:
     /** 坐标转换 xyah -> tlwh */
     static void xyah_to_tlwh(const float xyah[4], float tlwh[4]);
 };
-
-/**
- * 向全局 FilterRegistry 注册 "kf" 滤波器
- *
- * 应用启动时调用一次即可。重复调用安全（会覆盖之前的注册）。
- */
-void register_filter();
 
 }  // namespace kflee::filter_kf
